@@ -36,6 +36,7 @@
             >
               <td>{{ item.name }}</td>
               <td>{{ item.key }}</td>
+              <td>{{ item.provider }}</td>
               <td>{{ item.ranking }}</td>
               <td>{{ item.facets }}</td>
               <td>{{ item.sponsorship }}</td>
@@ -84,6 +85,10 @@ export default {
         value: 'key'
       },
       {
+        text: 'Provider ID',
+        value: 'provider'
+      },
+      {
         text: 'Ranking ID',
         value: 'ranking'
       },
@@ -108,6 +113,7 @@ export default {
       {
         name: 'Expedia',
         key: 'sSfjsdh4457sd',
+        provider: 'provider_id_1',
         ranking: 'ranking_id_1',
         facets: 'facets_id_1',
         sponsorship: 'sponsorship_id_1',
@@ -117,6 +123,7 @@ export default {
       {
         name: 'BE',
         key: 'dssa577gfsdas',
+        provider: 'provider_id_1',
         ranking: 'ranking_id_2',
         facets: 'facets_id_2',
         sponsorship: 'sponsorship_id_2',
@@ -124,6 +131,7 @@ export default {
       },{
         name: 'UK',
         key: 'ubskl4545dsmn',
+        provider: 'provider_id_2',
         ranking: 'ranking_id_3',
         facets: 'facets_id_3',
         sponsorship: 'sponsorship_id_3',
@@ -131,6 +139,7 @@ export default {
       },{
         name: 'Airtours',
         key: 'ifdn4idiuvn4',
+        provider: 'provider_id_3',
         facets: 'facets_id_3',
         sponsorship: 'sponsorship_id_4',
         paymentRules: 'payment_rules_id_3',
