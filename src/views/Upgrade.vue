@@ -1,87 +1,93 @@
 <template>
-  <v-container>
-    <v-layout justify-center>
+  <v-container
+    fill-height
+    fluid
+    grid-list-xl>
+    <v-layout
+      justify-center
+      wrap
+    >
       <v-flex
         xs12
-        sm10
-        md8
+        md4
       >
         <material-card
-          color="primary"
-          title="Vue Material Dashboard PRO"
-          text="Are you looking for more components? Please check our Premium Version of Vue Material Dashboard."
+          color="green"
+          title="Provider Configuration"
+          text="This is a list of all the provider configurations"
         >
-          <table class="v-table">
-            <thead>
-              <tr>
-                <th/>
-                <th class="subheading font-weight-light">Free</th>
-                <th class="subheading font-weight-light">PRO</th>
-              </tr>
-            </thead>
-            <tbody class="text-xs-center">
-              <tr>
-                <th class="text-xs-left font-weight-light subheading">Components</th>
-                <td>60</td>
-                <td>200</td>
-              </tr>
-              <tr>
-                <th class="text-xs-left font-weight-light subheading">Plugins</th>
-                <td>2</td>
-                <td>15</td>
-              </tr>
-              <tr>
-                <th class="text-xs-left font-weight-light subheading">Example Pages</th>
-                <td>3</td>
-                <td>27</td>
-              </tr>
-              <tr>
-                <th class="text-xs-left font-weight-light subheading">Login, Register, Pricing, Lock Pages</th>
-                <td>
-                  <v-icon color="error">mdi-close</v-icon>
-                </td>
-                <td>
-                  <v-icon color="success">mdi-check</v-icon>
-                </td>
-              </tr>
-              <tr>
-                <th class="text-xs-left font-weight-light subheading">Premium Support</th>
-                <td>
-                  <v-icon color="error">mdi-close</v-icon>
-                </td>
-                <td>
-                  <v-icon color="success">mdi-check</v-icon>
-                </td>
-              </tr>
-              <tr>
-                <th/>
-                <td>Free</td>
-                <td>Just $59</td>
-              </tr>
-              <tr>
-                <th/>
-                <td>
-                  <v-btn
-                    class="subheading white--text font-weight-light"
-                    round
-                    large
-                    color="grey"
-                    disabled
-                  >Current Version</v-btn>
-                </td>
-                <td>
-                  <v-btn
-                    class="subheading white--text font-weight-light"
-                    round
-                    large
-                    color="cyan"
-                  >Upgrade to Pro</v-btn>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <v-data-table
+            :headers="headers"
+            :items="items"
+            hide-actions
+          >
+            <template
+              slot="headerCell"
+              slot-scope="{ header }"
+            >
+              <span
+                class="subheading font-weight-light text-success text--darken-3"
+                v-text="header.text"
+              />
+            </template>
+            <template
+              slot="items"
+              slot-scope="{ item }"
+            >
+              <td>{{ item.id }}</td>
+              <td>{{ item.description }}</td>
+
+              <td class="text-xs-right">{{ item.salary }}</td>
+            </template>
+          </v-data-table>
+        </material-card>
+      </v-flex>
+        
+      <v-flex
+        xs12
+        md8
+      >
+        <material-card>
+          <v-card-text class="text-xs-center">
+            <h6 class="category text-gray font-weight-thin mb-3">Atcore channel X configuration</h6>
+            <h4 class="card-title font-weight-light">This can be whatever it needs to be</h4>
+            <v-btn
+              color="success"
+              class="font-weight-light"
+            >Update</v-btn>
+          </v-card-text>
         </material-card>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    headers: [
+      {
+        text: 'ID',
+        value: 'id'
+      },
+      {
+        text: 'Description',
+        value: 'description'
+      },
+    ],
+    items: [
+      {
+        id: 'provider_id_1',
+        description: 'Atcore for channel X',
+      },
+      {
+        id: 'provider_id_2',
+        description: 'Atcore for channel Y',
+      },{
+        id: 'provider_id_3',
+        description: 'Playerhub for channel Z',
+      }
+    ]
+  })
+}
+</script>

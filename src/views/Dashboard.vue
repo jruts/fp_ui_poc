@@ -48,8 +48,26 @@
             </template>
           </v-data-table>
         </material-card>
+        <v-btn
+      fab
+      bottom
+      right
+      fixed
+      @click.stop="dialog = !dialog"
+    >
+      <v-icon>mdi-invert-colors</v-icon>
+    </v-btn>
       </v-flex>
     </v-layout>
+     <v-btn
+      fab
+      bottom
+      right
+      fixed
+      @click.stop="dialog = !dialog"
+    >
+      <v-icon>mdi-invert-colors</v-icon>
+    </v-btn>
   </v-container>
 </template>
 

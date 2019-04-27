@@ -40,7 +40,7 @@ export default [
   },
   {
     path: '/upgrade',
-    name: 'Upgrade to PRO',
+    name: 'Providers',
     view: 'Upgrade'
   }
 ]

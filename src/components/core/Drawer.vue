@@ -79,6 +79,11 @@ export default {
         text: 'Consumers'
       },
       {
+        to: '/Upgrade',
+        icon: 'mdi-atom',
+        text: 'Providers'
+      },
+      {
         to: '/user-profile',
         icon: 'mdi-view-dashboard',
         text: 'Ranking'
