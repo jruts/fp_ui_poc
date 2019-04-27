@@ -71,7 +71,7 @@ import {
 
 export default {
   data: () => ({
-    logo: './img/vuetifylogo.png',
+    logo: './img/sons.png',
     links: [
       {
         to: '/dashboard',
@@ -152,8 +152,7 @@ export default {
     }
 
     .v-image__image--contain {
-      top: 9px;
-      height: 60%;
+      height: 100%;
     }
 
     .search-input {
