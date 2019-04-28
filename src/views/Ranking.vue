@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
-    <v-layout justify-center wrap>
+    <v-layout wrap>
       <v-flex xs12 md4>
         <material-card
           color="green"
@@ -25,12 +25,12 @@
         </material-card>
       </v-flex>
 
-      <v-flex xs12 md8>
+      <v-flex xs12 md8 v-if="selectedItem">
         <material-card>
           <v-card-text class="text-xs-center">
             <h6 class="category text-gray font-weight-thin mb-3">{{ selectedItem.id }} configuration</h6>
-            <h4 class="card-title font-weight-light">This can be whatever it needs to be</h4>
-            <v-btn color="success" class="font-weight-light">Update</v-btn>
+            <h4 class="card-title font-weight-light">{{ selectedItem.description }}</h4>
+            <v-btn color="success" class="font-weight-light" @click="update">Update</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -63,8 +63,11 @@ import { find } from "lodash";
 
 export default {
   methods: {
+    update() {
+      this.selectedItem = '';
+    },
     selectItem(id) {
-      this.selectedItem = find(this.items(i => i.id === id))
+      this.selectedItem = find(this.items, i => i.id === id);
     },
     save() {
       this.saveToStore({
@@ -79,10 +82,10 @@ export default {
     })
   },
   computed: mapState({
-    items: state => state.ranking,
-    selectedItem: state => state.ranking[0]
+    items: state => state.ranking
   }),
   data: () => ({
+    selectedItem: "",
     search: "",
     dialogVisible: false,
     dialog: {

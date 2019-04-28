@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
-    <v-layout justify-center wrap>
+    <v-layout wrap>
       <v-flex xs12 md4>
         <material-card
           color="green"
@@ -16,21 +16,21 @@
               />
             </template>
             <template slot="items" slot-scope="{ item }">
-              <td>{{ item.id }}</td>
-              <td>{{ item.description }}</td>
-
-              <td class="text-xs-right">{{ item.salary }}</td>
+              <tr @click="selectItem(item.id)">
+                <td>{{ item.id }}</td>
+                <td>{{ item.description }}</td>
+              </tr>
             </template>
           </v-data-table>
         </material-card>
       </v-flex>
 
-      <v-flex xs12 md8>
+      <v-flex xs12 md8 v-if="selectedItem">
         <material-card>
           <v-card-text class="text-xs-center">
-            <h6 class="category text-gray font-weight-thin mb-3">Expedia configuration</h6>
-            <h4 class="card-title font-weight-light">This can be whatever it needs to be</h4>
-            <v-btn color="success" class="font-weight-light">Update</v-btn>
+            <h6 class="category text-gray font-weight-thin mb-3">{{ selectedItem.id }} configuration</h6>
+            <h4 class="card-title font-weight-light">{{ selectedItem.description }}</h4>
+            <v-btn color="success" class="font-weight-light" @click="update">Update</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -59,9 +59,16 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { find } from "lodash";
 
 export default {
   methods: {
+    update() {
+      this.selectedItem = "";
+    },
+    selectItem(id) {
+      this.selectedItem = find(this.items, i => i.id === id);
+    },
     save() {
       this.saveToStore({
         id: this.dialog.id,
@@ -78,6 +85,7 @@ export default {
     items: state => state.paymentRules
   }),
   data: () => ({
+    selectedItem: "",
     search: "",
     dialogVisible: false,
     dialog: {

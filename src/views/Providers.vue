@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
-    <v-layout justify-center wrap>
-      <v-flex xs12>
+    <v-layout wrap>
+      <v-flex xs12 md4>
         <material-card
           color="green"
           title="Provider Configuration"
@@ -16,13 +16,26 @@
               />
             </template>
             <template slot="items" slot-scope="{ item }">
-              <td>{{ item.id }}</td>
-              <td>{{ item.description }}</td>
-              <td>{{ item.provider }}</td>
-              <td>{{ item.url }}</td>
-              <td>{{ item.authenticationKey }}</td>
+              <tr @click="selectItem(item.id)">
+                <td>{{ item.id }}</td>
+                <td>{{ item.description }}</td>
+              </tr>
             </template>
           </v-data-table>
+        </material-card>
+      </v-flex>
+      <v-flex xs12 md8 v-if="selectedItem">
+        <material-card>
+          <v-card-text class="text-xs-center">
+            <h6 class="category text-gray font-weight-thin mb-3">{{ selectedItem.id }} configuration</h6>
+            <h4 class="card-title font-weight-light">{{ selectedItem.description }}</h4>
+          </v-card-text>
+          <v-card-text>
+            <h4 class="card-title font-weight-light">{{ selectedItem.provider }}</h4>
+            <h4 class="card-title font-weight-light">{{ selectedItem.url }}</h4>
+            <h4 class="card-title font-weight-light">{{ selectedItem.authenticationKey }}</h4>
+            <v-btn color="success" class="font-weight-light" @click="update">Update</v-btn>
+          </v-card-text>
         </material-card>
       </v-flex>
       <v-flex md12>
@@ -60,9 +73,16 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { find } from "lodash";
 
 export default {
   methods: {
+    update() {
+      this.selectedItem = '';
+    },
+    selectItem(id) {
+      this.selectedItem = find(this.items, i => i.id === id);
+    },
     save() {
       this.saveToStore({
         id: this.dialog.id,
@@ -84,6 +104,7 @@ export default {
     items: state => state.providers
   }),
   data: () => ({
+    selectedItem: "",
     search: "",
     providers: ['ATCORE', 'PLAYERHUB'],
     dialogVisible: false,
@@ -102,18 +123,6 @@ export default {
       {
         text: "Description",
         value: "description"
-      },
-      {
-        text: "Provider",
-        value: "provider"
-      },
-      {
-        text: "Url",
-        value: "url"
-      },
-      {
-        text: "Authentication key",
-        value: "authenticationKey"
       }
     ]
   })
