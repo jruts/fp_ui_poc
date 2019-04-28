@@ -16,10 +16,10 @@
               />
             </template>
             <template slot="items" slot-scope="{ item }">
-              <td>{{ item.id }}</td>
-              <td>{{ item.description }}</td>
-
-              <td class="text-xs-right">{{ item.salary }}</td>
+              <tr @click="selectItem(item.id)">
+                <td>{{ item.id }}</td>
+                <td>{{ item.description }}</td>
+              </tr>
             </template>
           </v-data-table>
         </material-card>
@@ -28,7 +28,7 @@
       <v-flex xs12 md8>
         <material-card>
           <v-card-text class="text-xs-center">
-            <h6 class="category text-gray font-weight-thin mb-3">X configuration</h6>
+            <h6 class="category text-gray font-weight-thin mb-3">{{ selectedItem.id }} configuration</h6>
             <h4 class="card-title font-weight-light">This can be whatever it needs to be</h4>
             <v-btn color="success" class="font-weight-light">Update</v-btn>
           </v-card-text>
@@ -59,9 +59,13 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { find } from "lodash";
 
 export default {
   methods: {
+    selectItem(id) {
+      this.selectedItem = find(this.items(i => i.id === id))
+    },
     save() {
       this.saveToStore({
         id: this.dialog.id,
@@ -75,7 +79,8 @@ export default {
     })
   },
   computed: mapState({
-    items: state => state.ranking
+    items: state => state.ranking,
+    selectedItem: state => state.ranking[0]
   }),
   data: () => ({
     search: "",

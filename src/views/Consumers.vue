@@ -188,7 +188,7 @@ export default {
         value: "name"
       },
       {
-        text: "Key",
+        text: "Authentication Key",
         value: "key"
       },
       {
