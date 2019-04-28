@@ -74,33 +74,33 @@ export default {
     logo: './img/sons.png',
     links: [
       {
-        to: '/dashboard',
-        icon: 'mdi-account',
+        to: '/consumers',
+        icon: 'mdi-account-group',
         text: 'Consumers'
       },
       {
-        to: '/Upgrade',
-        icon: 'mdi-atom',
+        to: '/providers',
+        icon: 'mdi-access-point',
         text: 'Providers'
       },
       {
-        to: '/user-profile',
-        icon: 'mdi-view-dashboard',
+        to: '/ranking',
+        icon: 'mdi-animation',
         text: 'Ranking'
       },
       {
-        to: '/table-list',
-        icon: 'mdi-clipboard-outline',
+        to: '/facets',
+        icon: 'mdi-ballot',
         text: 'Facets'
       },
       {
-        to: '/typography',
+        to: '/sponsorship',
         icon: 'mdi-format-font',
         text: 'Sponsorhip'
       },
       {
-        to: '/icons',
-        icon: 'mdi-chart-bubble',
+        to: '/paymentRules',
+        icon: 'mdi-cash',
         text: 'Payment Rules'
       }
     ],

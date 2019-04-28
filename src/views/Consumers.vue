@@ -8,7 +8,8 @@
             title="Consumers"
             text="This is a list of all consumers of the flexible platform with their configuration"
           >
-            <v-data-table :headers="headers" :items="items" hide-actions>
+            <v-text-field v-model="search" append-icon="mdi-search" label="Search"></v-text-field>
+            <v-data-table :headers="headers" :items="items" hide-actions :search="search">
               <template slot="headerCell" slot-scope="{ header }">
                 <span
                   class="subheading font-weight-light text-success text--darken-3"
@@ -20,9 +21,9 @@
                 <td>{{ item.key }}</td>
                 <td>{{ item.provider }}</td>
                 <td>{{ item.ranking }}</td>
-                <td>{{ item.facets }}</td>
+                <td>{{ item.facet }}</td>
                 <td>{{ item.sponsorship }}</td>
-                <td>{{ item.paymentRules }}</td>
+                <td>{{ item.paymentRule }}</td>
                 <td>
                   <v-switch v-model="item.active"></v-switch>
                 </td>
@@ -49,12 +50,11 @@
           <v-stepper-content step="1">
             <v-card flat>
               <v-card-text>
-                <v-text-field label="Name"></v-text-field>
-                <v-text-field label="Description"></v-text-field>
+                <v-text-field v-model="consumer.name" label="Name"></v-text-field>
+                <v-text-field v-model="consumer.description" label="Description"></v-text-field>
               </v-card-text>
               <v-btn color="green" @click="e6 = 2">Continue</v-btn>
             </v-card>
-            <v-btn flat>Cancel</v-btn>
           </v-stepper-content>
 
           <v-stepper-step :complete="e6 > 2" step="2">Add services</v-stepper-step>
@@ -63,36 +63,46 @@
             <v-card flat>
               <v-card-text>
                 <v-select
-                  v-model="select"
+                  v-model="consumer.provider"
                   :items="providers"
+                  item-text="description"
+                  item-value="id"
                   :rules="[v => !!v || 'Item is required']"
                   label="Provider"
                   required
                 ></v-select>
                 <v-select
-                  v-model="select"
+                  v-model="consumer.ranking"
                   :items="rankings"
+                  item-text="description"
+                  item-value="id"
                   :rules="[v => !!v || 'Item is required']"
                   label="Ranking"
                   required
                 ></v-select>
                 <v-select
-                  v-model="select"
+                  v-model="consumer.facet"
                   :items="facets"
+                  item-text="description"
+                  item-value="id"
                   :rules="[v => !!v || 'Item is required']"
                   label="Facets"
                   required
                 ></v-select>
                 <v-select
-                  v-model="select"
+                  v-model="consumer.sponsorship"
                   :items="sponsorships"
+                  item-text="description"
+                  item-value="id"
                   :rules="[v => !!v || 'Item is required']"
                   label="Sponsorship"
                   required
                 ></v-select>
                 <v-select
-                  v-model="select"
+                  v-model="consumer.paymentRule"
                   :items="paymentRules"
+                  item-text="description"
+                  item-value="id"
                   :rules="[v => !!v || 'Item is required']"
                   label="Payment Rules"
                   required
@@ -100,21 +110,18 @@
               </v-card-text>
               <v-btn color="green" @click="e6 = 3">Continue</v-btn>
             </v-card>
-            <v-btn flat>Cancel</v-btn>
           </v-stepper-content>
 
           <v-stepper-step step="3">Review Setup</v-stepper-step>
           <v-stepper-content step="3">
             <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-            <v-btn color="green" @click="e6 = 1">Continue</v-btn>
-            <v-btn flat>Cancel</v-btn>
           </v-stepper-content>
         </v-stepper>
         <v-card-actions>
-          <v-btn flat color="primary">More</v-btn>
+          <v-btn color="green">More</v-btn>
           <v-spacer></v-spacer>
-          <v-btn flat color="green" @click="dialog = false">Cancel</v-btn>
-          <v-btn flat @click="dialog = false">Save</v-btn>
+          <v-btn color="green" @click="dialog = false">Cancel</v-btn>
+          <v-btn color="green" @click="save">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -122,15 +129,59 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+import { generate } from "short-uuid";
+
 export default {
+  methods: {
+    save() {
+      console.log(this.consumer);
+      this.saveToStore({
+        name: this.consumer.name,
+        description: this.consumer.description,
+        key: generate(),
+        provider: this.consumer.provider,
+        facet: this.consumer.facet,
+        ranking: this.consumer.ranking,
+        sponsorship: this.consumer.sponsorship,
+        paymentRule: this.consumer.paymentRule
+      });
+      this.dialog = false;
+      this.consumer = {
+        name: "",
+        description: "",
+        provider: null,
+        ranking: null,
+        sponsorship: null,
+        paymentRule: null
+      };
+      this.e6 = 1
+    },
+    ...mapMutations({
+      saveToStore: "addConsumer"
+    })
+  },
+  computed: mapState({
+    items: state => state.consumers,
+    providers: state => state.providers,
+    rankings: state => state.ranking,
+    facets: state => state.facets,
+    sponsorships: state => state.sponsorship,
+    paymentRules: state => state.paymentRules
+  }),
   data: () => ({
-    providers: [ 'provider_id_1', 'provider_id_2', 'create new'],
-    rankings: [ 'ranking_id_1', 'ranking_id_2', 'create new'],
-    facets: [ 'facets_id_1', 'facets_id_2', 'create new'],
-    sponsorships: [ 'sponsorship_id_1', 'create new'],
-    paymentRules: [ 'pr_id_1', 'pr_id_2', 'create new'],
-    e6: 1,
+    search: "",
     dialog: false,
+    consumer: {
+      name: "",
+      description: "",
+      provider: null,
+      facet: null,
+      ranking: null,
+      sponsorship: null,
+      paymentRule: null
+    },
+    e6: 1,
     headers: [
       {
         text: "Name",
@@ -163,45 +214,6 @@ export default {
       {
         text: "Active",
         value: "active"
-      }
-    ],
-    items: [
-      {
-        name: "Expedia",
-        key: "sSfjsdh4457sd",
-        provider: "provider_id_1",
-        ranking: "ranking_id_1",
-        facets: "facets_id_1",
-        sponsorship: "sponsorship_id_1",
-        paymentRules: "payment_rules_id_1",
-        active: true
-      },
-      {
-        name: "BE",
-        key: "dssa577gfsdas",
-        provider: "provider_id_1",
-        ranking: "ranking_id_2",
-        facets: "facets_id_2",
-        sponsorship: "sponsorship_id_2",
-        active: true
-      },
-      {
-        name: "UK",
-        key: "ubskl4545dsmn",
-        provider: "provider_id_2",
-        ranking: "ranking_id_3",
-        facets: "facets_id_3",
-        sponsorship: "sponsorship_id_3",
-        paymentRules: "payment_rules_id_3"
-      },
-      {
-        name: "Airtours",
-        key: "ifdn4idiuvn4",
-        provider: "provider_id_3",
-        facets: "facets_id_3",
-        sponsorship: "sponsorship_id_4",
-        paymentRules: "payment_rules_id_3",
-        active: true
       }
     ]
   })

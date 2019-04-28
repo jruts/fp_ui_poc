@@ -5,42 +5,34 @@
  */
 export default [
   {
-    path: '/dashboard',
+    path: '/consumers',
     // Relative to /src/views
-    view: 'Dashboard',
+    view: 'Consumers',
     name: 'Consumers'
   },
   {
-    path: '/user-profile',
+    path: '/ranking',
     name: 'Ranking',
-    view: 'UserProfile'
+    view: 'Ranking'
   },
   {
-    path: '/table-list',
+    path: '/facets',
     name: 'Facets',
-    view: 'TableList'
+    view: 'Facets'
   },
   {
-    path: '/typography',
-    view: 'Typography',
+    path: '/sponsorship',
+    view: 'Sponsorship',
     name: 'Sponsored Hotels'
   },
   {
-    path: '/icons',
-    view: 'Icons',
+    path: '/paymentRules',
+    view: 'PaymentRules',
     name: 'Payment Rules'
   },
   {
-    path: '/maps',
-    view: 'Maps'
-  },
-  {
-    path: '/notifications',
-    view: 'Notifications'
-  },
-  {
-    path: '/upgrade',
+    path: '/providers',
     name: 'Providers',
-    view: 'Upgrade'
+    view: 'Providers'
   }
 ]
