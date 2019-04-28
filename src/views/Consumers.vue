@@ -108,17 +108,10 @@
                   required
                 ></v-select>
               </v-card-text>
-              <v-btn color="green" @click="e6 = 3">Continue</v-btn>
             </v-card>
-          </v-stepper-content>
-
-          <v-stepper-step step="3">Review Setup</v-stepper-step>
-          <v-stepper-content step="3">
-            <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
           </v-stepper-content>
         </v-stepper>
         <v-card-actions>
-          <v-btn color="green">More</v-btn>
           <v-spacer></v-spacer>
           <v-btn color="green" @click="dialog = false">Cancel</v-btn>
           <v-btn color="green" @click="save">Save</v-btn>
